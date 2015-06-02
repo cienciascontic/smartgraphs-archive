@@ -28,7 +28,21 @@ Both directories should have the following layout:
 2. Copy the `.env_sample` file to make a local `.env` that will automatically be used by s3_website to upload and sync content.
 3. make changes in `_site/*` and use `s3_website push` to update the bucket and CDN.
 4. To change configuration for any reason, edit `s3_website.yml` and then run `s3_website cfg apply`
+5. This will update the website at `smartgraphs-closed.concord.org` as specified
+in the file `smartgraphs-closed/s3_website.yml`. Read that file for more details.
 
+#### activity-archive specific instructions
+
+To rebuild the AWS S3 site of archived SmartGraphs activities:
+
+0. optionally make changes to the index file `index.html.erb`
+1. run `./slurp.rb` to copy activities from production website `to _site`
+2. commit changes to this repo.
+3. push changes to S3 `s3_website push` from within the `activity-archive` folder
+4. this will update the site at http://smartgraphs-activity-arch.concord.org/
+
+NB: This does not copy the resources required for the activities (image &etc.)
+TBD.
 
 #### The Amazon AMI for SmartGraphs authoring
 
