@@ -32,4 +32,10 @@ Both directories should have the following layout:
 
 #### The Amazon AMI for SmartGraphs authoring
 
-TBD.
+A private AMI was created ami-abb854c0 of the authoring system before the latest
+bug fixes (related to copying) were deployed. As soon as new changes go into
+production a new private AMI can be created.
+
+The AMI's are private, because they include database credentials at the moment.
+If we want to create a public AMI, that work remains to be completed.
+(Idea: We could create a public AMI using sqllite in future.)
