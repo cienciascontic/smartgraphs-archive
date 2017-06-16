@@ -37,12 +37,14 @@ To rebuild the AWS S3 site of archived SmartGraphs activities:
 
 0. optionally make changes to the index file `index.html.erb`
 1. run `./slurp.rb` to copy activities from production website `to _site`
+2. run `./spcase.rb` to special-case copy some activities (the authoring system was permissive with
+URLs and allowed activities/[number]-whatever-you-want -- in some cases these slugs were rewritten and
+need to be manually copied here in this repo)
+2. Add `static/` directory to _site if its not there already. This should be copied from a SmartGraphs build or the SmartGraphs Authoring server.  It contains required SmartGraphs and Sproutcore assetts.
 2. commit changes to this repo.
 3. push changes to S3 `s3_website push` from within the `activity-archive` folder
 4. this will update the site at http://smartgraphs-activity-arch.concord.org/
 
-NB: This does not copy the resources required for the activities (image &etc.)
-TBD.
 
 #### The Amazon AMI for SmartGraphs authoring
 

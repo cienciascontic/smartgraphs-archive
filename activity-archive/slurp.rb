@@ -6,13 +6,13 @@ require "json"
 require "net/http"
 require "uri"
 require "erb"
+require 'fileutils'
 
 
 SERVER = "smartgraphs-authoring.concord.org"
 PUBLIC_ACTIVITIES_PATH = "activities.json"
 OUT_DIR = File.join(Dir.pwd, "_site")
 OUT_JSON = File.join(OUT_DIR, "public_activities.json")
-LOCAL_ACTIVITIES = File.join(OUT_DIR, "activities")
 INDEX_ERB = File.join(Dir.pwd, "index.html.erb")
 
 activities_json_url = "http://#{SERVER}/#{PUBLIC_ACTIVITIES_PATH}"
@@ -27,14 +27,14 @@ response = http.request(request)
 if response.code == "200"
   hash_result = JSON.parse(response.body).map do |doc|
       act = doc['activity']
-      slug = act['name'].downcase.gsub(/[^a-z]+/,'-')
+      slug = act['name'].strip.downcase.gsub(/[^a-z]+/,'-').gsub(/\-$/,"") # remove final "-"
       { 'activity'=> {
           'author_name' => act['author_name'],
           'cc_project_name' => act['cc_project_name'],
           'id'=> act['id'],
           'name' => act['name'],
           'remote_url' => "#{activities_base}#{act['id']}/student_preview.html",
-          'local_url' => "#{act['id']}-#{slug}.html"
+          'local_url' => "activities/#{act['id']}-#{slug}/student_preview/index.html"
         }
     }
   end
@@ -50,7 +50,13 @@ if response.code == "200"
     request.content_type = 'text/html'
     response = http.request(request)
     if response.code == "200"
-      File.open(File.join(OUT_DIR,v['local_url']),'w') do |f|
+      local_file = File.join(OUT_DIR,v['local_url'])
+      dirname = File.dirname(local_file)
+      unless File.directory?(dirname)
+        FileUtils.mkdir_p(dirname)
+      end
+
+      File.open(local_file,'w') do |f|
         f.write(response.body)
       end
     else
