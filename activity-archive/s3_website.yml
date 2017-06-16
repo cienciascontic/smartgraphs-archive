@@ -11,8 +11,9 @@ cloudfront_distribution_config:
   default_cache_behavior:
     min_TTL: <%= 60 * 60 * 24 %>
   aliases:
-    quantity: 1
+    quantity: 2
     items:
       CNAME: smartgraphs-activity-arch.concord.org
+      CNAME: smartgraphs-authoring.concord.org
 
 cloudfront_invalidate_root: true

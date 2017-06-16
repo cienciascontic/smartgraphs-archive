@@ -8,8 +8,8 @@ require "uri"
 require "erb"
 require 'fileutils'
 
-
-SERVER = "smartgraphs-authoring.concord.org"
+# SERVER = "smartgraphs-authoring.concord.org"
+SERVER = "204.236.230.48"
 PUBLIC_ACTIVITIES_PATH = "activities.json"
 OUT_DIR = File.join(Dir.pwd, "_site")
 OUT_JSON = File.join(OUT_DIR, "public_activities.json")
